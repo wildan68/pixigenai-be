@@ -5,7 +5,8 @@ import cors from 'cors'
 import requestIp from 'request-ip'
 import morgan from 'morgan'
 import ServicesRoutes from './routes/services.routes.js'
-import syncDB from './models/sync.db.js';
+import AuthRoutes from './routes/auth.routes.js'
+// import syncDB from './models/sync.db.js';
 import 'dotenv/config'
 
 const app: Express = express()
@@ -22,8 +23,9 @@ app.use(morgan('dev', {
 }))
 
 // sync & seeder DB
-syncDB()
+// syncDB()
 
+app.use(AuthRoutes)
 app.use(ServicesRoutes)
 
 

@@ -8,6 +8,7 @@ export default function usersModels(sequelize: Sequelize) {
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
     },
     email: {
       type: DataTypes.STRING,

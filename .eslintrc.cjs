@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     'no-unused-vars': 'off',
     indent: ['error', 2],
-    "@typescript-eslint/no-var-requires": "off"
+    '@typescript-eslint/no-var-requires': 'off',
+    'no-useless-escape': 'off'
   },
 }

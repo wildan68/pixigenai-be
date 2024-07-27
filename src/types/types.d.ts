@@ -14,6 +14,8 @@ export interface UsersAttributes extends Model<InferAttributes<UsersAttributes>,
   created_at?:      string;
 }
 
+export type ValidationTypes = 'email' | 'number' | 'string' | 'url' | 'min' | 'max'
+
 type license = 'editorial' | 'enhanced' | 'commercial'
 type sort = 'popular' | 'newest' | 'random' | 'relevance' | 'artist' | 'bpm' | 'duration' | 'freshness' | 'ranking_all' | 'score' | 'title'
 type orientation = 'horizontal' | 'vertical'
