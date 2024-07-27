@@ -29,7 +29,6 @@ export default async function AuthMiddleware(req: Request, res: Response, next: 
       limit: 1,
       where: {
         id: decoded.id,
-        telegram_id: decoded.telegram_id,
         username: decoded.username
       },
       raw: true

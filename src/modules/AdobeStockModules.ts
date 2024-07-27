@@ -1,12 +1,15 @@
 import 'dotenv/config'
 import axios, { AxiosInstance } from 'axios'
+import UtilitiesModules from './UtilitiesModules.js'
 
-export default class AdobeStockModules {
+export default class AdobeStockModules extends UtilitiesModules {
   private apiKey: string
   private axios: AxiosInstance
   private BASE_URL = 'https://stock.adobe.io/Rest'
 
   constructor () {
+    super()
+
     this.apiKey = process.env.ADOBESTOCK_API_KEY as string
     this.axios = axios
 
@@ -27,9 +30,7 @@ export default class AdobeStockModules {
     })
   }
 
-  private buildQuery (query: any) {
-    return Object.keys(query).map(key => `${key}=${query[key]}`).join('&')
-  }
+  
 
   async searchImages (query: any) {
     return new Promise((resolve, reject) => {

@@ -1,34 +1,17 @@
 import { Model, CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 
 export interface UsersAttributes extends Model<InferAttributes<UsersAttributes>, InferCreationAttributes<UsersAttributes>> {
-  id?: CreationOptional<number>;
-  telegram_id?: number;
-  username?: string;
-  fullname?: string;
-  role?: string;
-  last_login_ip?: string;
-  register_ip?: string;
-  banned?: boolean;
-  expired_at?: string;
-  created_at?: string;
-}
-
-export interface AuthListAttributes extends Model<InferAttributes<AuthListAttributes>, InferCreationAttributes<AuthListAttributes>> {
-  id?: CreationOptional<number>;
-  user_id?: number;
-  telegram_key?: string;
-  token?: string;
-  bot_name?: string;
-  active?: boolean;
-  created_at?: string;
-  updated_at?: string;
-}
-
-export interface ResultLogAttributes {
-  user_id?: number;
-  success?: boolean;
-  text?: string;
-  created_at?: string;
+  id?:              CreationOptional<string>;
+  email?:           string;
+  password?:        string;
+  username?:        string;
+  fullname?:        string;
+  role?:            string;
+  last_login_ip?:   string;
+  register_ip?:     string;
+  banned?:          boolean;
+  expired_at?:      string;
+  created_at?:      string;
 }
 
 type license = 'editorial' | 'enhanced' | 'commercial'
@@ -39,16 +22,54 @@ type region = 'cs' | 'da' | 'en' | 'de' | 'el' | 'es' | 'fi' | 'fr' | 'hu' | 'it
 type image_type = 'illustration' | 'vector' | 'photos'
 
 export interface SearchQueryAttributes {
-  query: string
-  license?: license[]
-  sort?: sort
-  orientation?: orientation
-  page?: string | number
-  per_page?: string | number
-  sort_order?: sort_order
-  language?: region
-  region?: region
+  query:          string
+  license?:       license[]
+  sort?:          sort
+  orientation?:   orientation
+  page?:          string | number
+  per_page?:      string | number
+  sort_order?:    sort_order
+  language?:      region
+  region?:        region
   people_number?: string
-  width_from?: string
-  height_from?: string
+  width_from?:    string
+  height_from?:   string
+}
+
+export interface GetModelsRespose {
+  id:                 string 
+  name:               string
+  author_url:         string
+  license_url:        string
+  family:             string
+  pipelines:          string
+  base_resolution: {
+    width:            number
+    height:           number
+  }
+  price:              number
+  created_at:         Date
+}
+
+export interface DiffusionXLAttributes {
+  model?:             string
+  prompt:             string
+  negative_prompt?:   string
+  prompt_2?:          string
+  negative_prompt_2?: string
+  width?:             number
+  height?:            number
+  steps?:             number
+  guidance?:          number
+  seed?:              number
+  scheduler?:         'euler'
+  output_format?:     'jpeg' | 'png'
+  response_format?:   'url' | 'b64'
+}
+
+export interface DiffusionXLResponse {
+  url?:   string
+  image?: string
+  seed?:  number
+  cost?:  number
 }

@@ -5,13 +5,16 @@ import type { UsersAttributes } from '../types/types.d.js'
 export default function usersModels(sequelize: Sequelize) {
   return sequelize.define<UsersAttributes>('users', {
     id: {
-      autoIncrement: true,
       type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
     },
-    telegram_id: {
-      type: DataTypes.NUMBER,
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     username: {

@@ -2,7 +2,6 @@ import { Sequelize } from 'sequelize'
 import mysql2 from 'mysql2'
 import dbConfig from '../config/db.config.js'
 import usersModels from './users.models.js'
-import authListModels from './authList.models.js'
 
 const sequelize = new Sequelize(
   dbConfig.DB,
@@ -25,7 +24,6 @@ const sequelize = new Sequelize(
 
 const models = {
   USERS: usersModels(sequelize),
-  AUTH_LIST: authListModels(sequelize),
 }
 
 export default models

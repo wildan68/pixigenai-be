@@ -1,6 +1,9 @@
 import express from 'express'
 import ShutterStockModules from '../modules/ShutterStockModules.js'
 import AdobeStockModules from '../modules/AdobeStockModules.js'
+import GetModels from './GetImg/GetModels.js'
+import ModelDetail from './GetImg/ModelDetail.js'
+import TextToImageDiffusionXL from './GetImg/TextToImageDiffusionXL.js'
 
 const router = express.Router()
 const sstk = new ShutterStockModules()
@@ -64,5 +67,10 @@ router.post('/astk/popular', (req, res) => {
       })
     })
 })
+
+router.get('/models', GetModels)
+router.get('/models/:id', ModelDetail)
+router.post('/create/text-to-images/difussionxl', TextToImageDiffusionXL)
+
 
 export default router
