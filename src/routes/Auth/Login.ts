@@ -1,10 +1,10 @@
 import type { Request, Response } from 'express'
 import usersContollers from '../../controllers/users.controllers.js'
-import { hashPassword, decrypt } from '../../utils/helper.js'
+import { hashPassword } from '../../utils/helper.js'
 import jwt from 'jsonwebtoken'
 
 export default async (req: Request, res: Response) => {
-  const { email, hash, buffer } = req.body as { email: string, hash: string, buffer: Buffer }
+  const { email, password } = req.body as { email: string, password: string }
 
   if (!email) {
     return res.status(400).json({
@@ -13,23 +13,7 @@ export default async (req: Request, res: Response) => {
     })
   }
 
-  if (!hash) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'Hash is required'
-    })
-  }
-
-  if (!buffer) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'Buffer is required'
-    })
-  }
-
-  const decryptHashToPassword = decrypt(hash, buffer)
-
-  if (!decryptHashToPassword) {
+  if (!password) {
     return res.status(400).json({
       status: 'error',
       message: 'Password is required'
@@ -38,9 +22,10 @@ export default async (req: Request, res: Response) => {
 
   const user = usersContollers()
 
+  
   const getUser = await user.get({
     where: {
-      email
+      email,
     },
     raw: true
   })
@@ -52,7 +37,7 @@ export default async (req: Request, res: Response) => {
     })
   }
 
-  const hashPasswordReq = hashPassword(decryptHashToPassword, getUser[0].salt as string)
+  const hashPasswordReq = hashPassword(password, getUser[0].salt as string)
 
   if (hashPasswordReq !== getUser[0].password) {
     return res.status(400).json({
@@ -77,9 +62,8 @@ export default async (req: Request, res: Response) => {
   delete getUser[0].role
 
   const tokenPayload = {
+    id: getUser[0].id,
     email: getUser[0].email,
-    hash,
-    buffer
   }
 
   const token = jwt.sign(tokenPayload, 'pxgai' as string, { expiresIn: '7d' })
