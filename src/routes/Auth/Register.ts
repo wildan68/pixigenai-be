@@ -1,9 +1,13 @@
 import type { Request, Response } from 'express'
 import usersContollers from '../../controllers/users.controllers.js'
-import { validation, randomString } from '../../utils/helper.js'
+import { validation, hashPassword, generateSalt } from '../../utils/helper.js'
+import RegisterStores from '../../stores/RegisterStores.js'
+import MailTransporterStores from '../../stores/MailTransporterStores.js'
 
 export default async (req: Request, res: Response) => {
   const { email, password } = req.body as { email: string, password: string }
+  const { store, generateOTP } = RegisterStores()
+  const { transporter } = MailTransporterStores()
 
   if (!email || !password) {
     return res.status(400).json({
@@ -19,10 +23,24 @@ export default async (req: Request, res: Response) => {
     })
   }
 
+  if (!validation(email, 'max', 30)) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Email must be at most 30 characters'
+    })
+  }
+
   if (!validation(password, 'min', 6)) {
     return res.status(400).json({
       status: 'error',
       message: 'Password must be at least 6 characters'
+    })
+  }
+
+  if (!validation(password, 'max', 50)) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Password must be at most 50 characters'
     })
   }
 
@@ -44,24 +62,61 @@ export default async (req: Request, res: Response) => {
     })
   }
 
-  user.create({ 
-    email, 
-    password, 
-    username: randomString(10), 
-    fullname: '', 
-    last_login_ip: userIp, 
-    register_ip: userIp 
-  })
-    .then(() => {
-      return res.status(200).json({
-        status: 'success',
-        message: 'User created successfully',
-      })
-    })
-    .catch((error) => {
+  // encrypt password
+  const salt = generateSalt()
+  const encryptedPassword = hashPassword(password, salt)
+
+  const userData = {
+    email,
+    password: encryptedPassword,
+    last_login_ip: userIp,
+    register_ip: userIp,
+    salt: salt,
+  }
+
+  const otp = generateOTP()
+
+  const checkStoreData = store.get(email)
+
+  // reset temporary data if exist
+  if (checkStoreData) {
+    store.delete(email)
+    store.delete(`${email}_otp`)
+  }
+
+  // Saved Temporary Data in Store
+  store.set(email, userData)
+  store.set(`${email}_otp`, otp)
+
+  // delete store after 5 minutes
+  setTimeout(() => {
+    store.delete(email)
+  }, 5 * 60 * 1000)
+
+  // delete otp after 2 minutes
+  setTimeout(() => {
+    store.delete(`${email}_otp`)
+  }, 2 * 60 * 1000)
+
+  // const send OTP Email
+  const mailOptions = {
+    from: 'support@pixigen.ai',
+    to: email,
+    subject: 'Your OTP Code',
+    text: `Your OTP code is: ${otp}`,
+  }
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
       return res.status(500).json({
         status: 'error',
         message: error
       })
-    })
+    }
+  })
+
+  return res.status(200).json({
+    status: 'success',
+    message: 'OTP sent successfully'
+  })
 }

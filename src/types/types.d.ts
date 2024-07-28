@@ -9,9 +9,12 @@ export interface UsersAttributes extends Model<InferAttributes<UsersAttributes>,
   role?:            string;
   last_login_ip?:   string;
   register_ip?:     string;
+  balance?:         number;
   banned?:          boolean;
-  expired_at?:      string;
+  banned_reason?:   string;
+  salt?:            string;
   created_at?:      string;
+  updated_at?:      string;
 }
 
 export type ValidationTypes = 'email' | 'number' | 'string' | 'url' | 'min' | 'max'
