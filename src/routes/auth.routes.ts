@@ -4,8 +4,12 @@ import VerifyOTP from './Auth/VerifyOTP.js'
 import ResendOTP from './Auth/ResendOTP.js'
 import SetupProfile from './Auth/SetupProfile.js'
 import Login from './Auth/Login.js'
+import { limiter } from '../utils/helper.js'
 
 const router = express.Router()
+
+// limiter 1 minutes 10 requests
+router.use(limiter(1, 10))
 
 router.post('/auth/register', Register)
 router.post('/auth/verify-otp', VerifyOTP)

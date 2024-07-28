@@ -7,7 +7,7 @@ import AuthMiddleware from '../middleware/auth.js'
 const router = express.Router()
 
 router.use(AuthMiddleware)
-router.use(limiter(null, 2))
+router.use(limiter(1, 10))
 
 router.post('/crypto/encrypt', (req, res) => {
   const { text } = req.body
