@@ -8,6 +8,9 @@ import ServicesRoutes from './routes/services.routes.js'
 import AuthRoutes from './routes/auth.routes.js'
 import CryptoRoutes from './routes/crypto.routes.js'
 import SeederRoutes from './routes/seeder.routes.js'
+import UserRoutes from './routes/user.routes.js'
+import { limiter } from './utils/helper.js';
+import AuthMiddleware from './middleware/auth.js'
 import 'dotenv/config'
 
 const app: Express = express()
@@ -28,7 +31,17 @@ app.use(morgan(':ip :method :url :status :response-time ms - :res[content-length
   skip: function (req, res) { return res.statusCode < 400 }
 }))
 
-app.use(AuthRoutes)
+// limiter 1 minutes 100 request
+app.use(limiter(1, 100))
+
+// Routes No Middleware
+app.use('/auth', AuthRoutes)
+
+// Middleware
+app.use(AuthMiddleware)
+
+// Routes With Middleware
+app.use('/user', UserRoutes)
 app.use(ServicesRoutes)
 app.use(CryptoRoutes)
 app.use(SeederRoutes)

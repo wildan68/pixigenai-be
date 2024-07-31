@@ -49,6 +49,10 @@ export default async function AuthMiddleware(req: Request, res: Response, next: 
       })
     }
 
+    delete user[0].password
+    delete user[0].salt
+    delete user[0].role
+
     // add req.user
     req.user = user[0] as UsersAttributes
     next()

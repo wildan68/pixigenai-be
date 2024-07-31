@@ -50,9 +50,11 @@ export default async (req: Request, res: Response) => {
 
   // check email exist
   const checkEmail = await user.get({
+    limit: 1,
     where: {
       email
-    }
+    },
+    raw: true
   })
 
   if (checkEmail.length > 0) {

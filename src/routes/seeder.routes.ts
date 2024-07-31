@@ -1,11 +1,8 @@
 import express from 'express'
 import { syncDBUsers } from '../seeders/sync.db.js'
-import AuthMiddleware from '../middleware/auth.js'
 import { isAdmin } from '../utils/helper.js'
 
 const router = express.Router();
-
-router.use(AuthMiddleware)
 
 router.get('/sync/db/users', (req, res) => {
   // check user role admin

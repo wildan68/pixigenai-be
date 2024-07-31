@@ -16,6 +16,7 @@
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
+    "resolveJsonModule": true,
   },
   "ts-node": {
     "esm": true

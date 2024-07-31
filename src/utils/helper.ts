@@ -35,8 +35,8 @@ export function validation (value: string, type: ValidationTypes, count?: number
   }
 }
 
-export function randomString (length: number) {
-  return Math.random().toString(36).slice(-length)
+export function randomString (numberFirst: number, numberLast: number): string {
+  return Math.random().toString(36).slice(numberFirst, numberLast)
 }
 
 export function encrypt (value: string, key: WithImplicitCoercion<Buffer>) {

@@ -1,13 +1,9 @@
 import express from 'express'
-import { encrypt, decrypt, hashPassword, generateKey, isAdmin, limiter } from '../utils/helper.js'
+import { encrypt, decrypt, hashPassword, generateKey, isAdmin } from '../utils/helper.js'
 import usersContollers from '../controllers/users.controllers.js'
 import jwt from 'jsonwebtoken'
-import AuthMiddleware from '../middleware/auth.js'
 
 const router = express.Router()
-
-router.use(AuthMiddleware)
-router.use(limiter(1, 10))
 
 router.post('/crypto/encrypt', (req, res) => {
   const { text } = req.body
