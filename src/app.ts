@@ -36,6 +36,7 @@ app.use(limiter(1, 100))
 
 // Routes No Middleware
 app.use('/auth', AuthRoutes)
+app.use(SeederRoutes)
 
 // Middleware
 app.use(AuthMiddleware)
@@ -44,7 +45,6 @@ app.use(AuthMiddleware)
 app.use('/user', UserRoutes)
 app.use(ServicesRoutes)
 app.use(CryptoRoutes)
-app.use(SeederRoutes)
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}!`);

@@ -94,7 +94,7 @@ export default async (req: Request, res: Response) => {
   // get verified otp
   const verifiedOtp = store.get(`${email}_verified`)
 
-  if (!verifiedOtp) {
+  if (!verifiedOtp && !getRegisterData.oauth_id) {
     return res.status(400).json({
       status: 'error',
       message: 'OTP not verified'

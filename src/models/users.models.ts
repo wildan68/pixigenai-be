@@ -57,6 +57,14 @@ export default function usersModels(sequelize: Sequelize) {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+    avatar: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    oauth_id: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
     created_at: {
       type: DataTypes.DATE,
       allowNull: false,

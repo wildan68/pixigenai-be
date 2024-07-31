@@ -12,6 +12,8 @@ export interface UsersAttributes extends Model<InferAttributes<UsersAttributes>,
   balance?:         number;
   banned?:          boolean;
   banned_reason?:   string;
+  avatar?:          string;
+  oauth_id?:        string;
   salt?:            string;
   created_at?:      string;
   updated_at?:      string;

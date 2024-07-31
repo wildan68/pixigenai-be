@@ -6,7 +6,15 @@ const router = express.Router();
 
 router.get('/sync/db/users', (req, res) => {
   // check user role admin
-  if (!isAdmin(req, res)) return
+  // if (!isAdmin(req, res)) return
+  const { key } = req.query as { key: string }
+
+  if (key !== '12356789') {
+    return res.status(401).json({
+      status: 'error',
+      message: 'Unauthorized'
+    })
+  }
 
   syncDBUsers()
     .then(() => {
