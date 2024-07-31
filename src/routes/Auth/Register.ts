@@ -100,9 +100,9 @@ export default async (req: Request, res: Response) => {
     store.delete(`${email}_otp`)
   }, 2 * 60 * 1000)
 
-  // const send OTP Email
+  // mail options
   const mailOptions = {
-    from: 'support@pixigen.ai',
+    from: 'no-reply@pixigen.ai',
     to: email,
     subject: 'Your OTP Code',
     text: `Your OTP code is: ${otp}`,

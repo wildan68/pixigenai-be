@@ -15,8 +15,8 @@ export interface UsersAttributes extends Model<InferAttributes<UsersAttributes>,
   avatar?:          string;
   oauth_id?:        string;
   salt?:            string;
-  created_at?:      string;
-  updated_at?:      string;
+  created_at?:      Date;
+  updated_at?:      Date;
 }
 
 export type ValidationTypes = 'email' | 'number' | 'string' | 'url' | 'min' | 'max'
