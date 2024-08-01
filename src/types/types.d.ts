@@ -26,7 +26,7 @@ type sort = 'popular' | 'newest' | 'random' | 'relevance' | 'artist' | 'bpm' | '
 type orientation = 'horizontal' | 'vertical'
 type sort_order = 'asc' | 'desc'
 type region = 'cs' | 'da' | 'en' | 'de' | 'el' | 'es' | 'fi' | 'fr' | 'hu' | 'it' | 'ja' | 'ko' | 'nl' | 'no' | 'pl' | 'pt' | 'ru' | 'sv' | 'tr' | 'zh' | 'in'
-type image_type = 'illustration' | 'vector' | 'photos'
+type image_type = 'illustration' | 'vector' | 'photo'
 
 export interface SearchQueryAttributes {
   query:          string
@@ -41,6 +41,7 @@ export interface SearchQueryAttributes {
   people_number?: string
   width_from?:    string
   height_from?:   string
+  image_type?:    image_type | image_type[]
 }
 
 export interface GetModelsRespose {
