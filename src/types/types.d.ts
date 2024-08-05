@@ -81,3 +81,19 @@ export interface DiffusionXLResponse {
   seed?:  number
   cost?:  number
 }
+
+interface TripoHaystackPayload {
+  id:               number
+  task_id:          string
+  thumbnail_url:    string
+  glb_url:          string
+  prompt:           string
+  type:             string
+  draft_model_id:   string | null
+}
+
+export interface TripoHaystackResponse {
+  message: string
+  code :   number
+  payload: TripoHaystackPayload[]
+}

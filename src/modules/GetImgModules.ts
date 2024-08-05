@@ -38,7 +38,7 @@ export default class GetImgModules extends UtilitiesModules {
     if (family) Object.assign(query, { family })
 
     return new Promise((resolve, reject) => {
-      this.axios.get(`/models?${this.buildQuery(query)}`)
+      this.axios.get(`/model`, { params: query })
         .then(({ data }: { data: GetModelsRespose[] }) => resolve(data))
         .catch((error) => reject(error))
     })

@@ -12,6 +12,7 @@ import UserRoutes from './routes/user.routes.js'
 import { limiter } from './utils/helper.js';
 import AuthMiddleware from './middleware/auth.js'
 import DiscoverRoutes from './routes/discover.routes.js'
+import TestingRoutes from './routes/testing.routes.js'
 import 'dotenv/config'
 
 const app: Express = express()
@@ -47,6 +48,7 @@ app.use('/user', UserRoutes)
 app.use('/discover', DiscoverRoutes)
 app.use(ServicesRoutes)
 app.use(CryptoRoutes)
+app.use('/testing', TestingRoutes)
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}!`);

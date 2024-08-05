@@ -2,9 +2,18 @@ import type { Request, Response } from 'express'
 import TripoModules from '../../modules/TripoModules.js'
 
 export default async (req: Request, res: Response) => {
+  const { text } = req.query as { text: string }
+
+  if (!text) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'text is required'
+    })
+  }
+
   const tripo = new TripoModules()
 
-  tripo.getRecommendModel()
+  tripo.searchModel({ prompt: text })
     .then(data => {
       const reMapping = data.payload.map((item) => ({
         id: item.id,

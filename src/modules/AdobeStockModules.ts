@@ -45,7 +45,7 @@ export default class AdobeStockModules extends UtilitiesModules {
         'search_parameters[offset]': calculatePageToOffset()
       }
 
-      this.axios.get(`/Media/1/Search/Files?${this.buildQuery(payload)}`)
+      this.axios.get(`/Media/1/Search/Files`, { params: payload })
         .then(({ data }) => {
           return resolve({
             ...data,
