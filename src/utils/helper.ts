@@ -1,5 +1,5 @@
 import { ValidationTypes } from '../types/types.js'
-import type { Request, Response } from 'express'
+import type { Request, Response, NextFunction } from 'express'
 import crypto from 'crypto'
 import { rateLimit } from 'express-rate-limit'
 
@@ -103,17 +103,14 @@ export function isAdmin (req: Request, res: Response) {
   return true
 }
 
-export function limiter (minutes?: number | null, max?: number | null) {
-  const min = minutes || 15
-
-  return rateLimit({
-    windowMs: min * 60 * 1000, // 15 minutes
-    max: max || 100, // default: limit each IP to 100 requests per windowMs
-    handler: function (req, res) {
-      res.status(429).json({
-        status: 'error',
-        message: 'Too many requests'
-      })
-    }
-  })
-}
+export const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+    
+  handler: function (req, res) {
+    res.status(429).json({
+      status: 'error',
+      message: 'Too many requests'
+    })
+  },
+})

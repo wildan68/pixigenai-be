@@ -34,11 +34,22 @@ app.use(morgan(':ip :method :url :status :response-time ms - :res[content-length
 }))
 
 // limiter 1 minutes 100 request
-app.use(limiter(1, 50))
+const excludeLimiterPath = ['/assets/webp']
+
+app.use((req, res, next) => {
+  console.log('masuk 1', req.path)
+  if (excludeLimiterPath.find((path) => req.path.includes(path))) {
+    next()
+  }
+  else {
+    limiter(req, res, next)
+  }
+})
 
 // Routes No Middleware
 app.use('/auth', AuthRoutes)
 app.use(SeederRoutes)
+app.use(ServicesRoutes)
 
 // Middleware
 app.use(AuthMiddleware)
@@ -46,7 +57,6 @@ app.use(AuthMiddleware)
 // Routes With Middleware
 app.use('/user', UserRoutes)
 app.use('/discover', DiscoverRoutes)
-app.use(ServicesRoutes)
 app.use(CryptoRoutes)
 app.use('/testing', TestingRoutes)
 

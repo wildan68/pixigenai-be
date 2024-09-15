@@ -97,3 +97,15 @@ export interface TripoHaystackResponse {
   code :   number
   payload: TripoHaystackPayload[]
 }
+
+export interface ModelsAttributes extends Model<InferAttributes<ModelsAttributes>, InferCreationAttributes<ModelsAttributes>> {
+  id?:              CreationOptional<string>
+  glb_path?:        string
+  draft_model_id?:  string
+  prompt?:          string
+  task_id?:         string
+  thumbnail_url?:   string
+  type?:            string
+  created_at?:      Date
+  updated_at?:      Date
+}

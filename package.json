@@ -43,6 +43,7 @@
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.14",
     "openai": "^4.2.0",
+    "pixigenai-be": "file:",
     "request-ip": "^3.3.0",
     "rimraf": "^5.0.1",
     "sequelize": "^6.37.3",

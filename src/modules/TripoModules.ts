@@ -64,4 +64,10 @@ export default class TripoModules extends UtilitiesModules {
         .catch((error) => reject(error))
     })
   }
+
+  getThumbnailId (url: string) {
+    const getUrl = url.split('/')
+    
+    return getUrl.slice(3).join('/')
+  }
 }

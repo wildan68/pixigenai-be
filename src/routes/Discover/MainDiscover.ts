@@ -9,7 +9,7 @@ export default async (req: Request, res: Response) => {
       const reMapping = data.payload.map((item) => ({
         id: item.id,
         task_id: item.task_id,
-        thumb_url: item.thumbnail_url,
+        thumb_url: tripo.getThumbnailId(item.thumbnail_url),
         description: item.prompt,
         type: item.type
       }))
