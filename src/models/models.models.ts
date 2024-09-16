@@ -10,6 +10,10 @@ export default function modelsModels(sequelize: Sequelize) {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
     draft_model_id: {
       type: DataTypes.UUID,
       allowNull: true

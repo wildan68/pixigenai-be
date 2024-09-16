@@ -100,6 +100,7 @@ export interface TripoHaystackResponse {
 
 export interface ModelsAttributes extends Model<InferAttributes<ModelsAttributes>, InferCreationAttributes<ModelsAttributes>> {
   id?:              CreationOptional<string>
+  user_id?:         string
   glb_path?:        string
   draft_model_id?:  string
   prompt?:          string
@@ -109,3 +110,32 @@ export interface ModelsAttributes extends Model<InferAttributes<ModelsAttributes
   created_at?:      Date
   updated_at?:      Date
 }
+
+interface BaseModel {
+  type: 'text_to_model' | 'image_to_model' | 'multiview_to_model'
+}
+
+interface FileModel {
+  file: {
+    type:         'jpg' | 'png'
+    file_token:   string
+  }
+}
+
+interface TextToModel extends BaseModel {
+  type:   'text_to_model'
+  prompt: string
+}
+
+interface ImageToModel extends BaseModel {
+  type: 'image_to_model'
+  file: FileModel
+}
+
+interface MultiviewToModel extends BaseModel {
+  type:  'multiview_to_model'
+  files: FileModel[]
+  mode: 'LEFT' | 'RIGHT'
+}
+
+export type GenerateModelPayload = TextToModel | ImageToModel | MultiviewToModel
