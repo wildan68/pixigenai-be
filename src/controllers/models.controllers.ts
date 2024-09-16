@@ -1,14 +1,14 @@
 import type { Filterable, FindOptions, InferAttributes } from 'sequelize'
 import models from '../models/index.js'
-import type { UsersAttributes } from '../types/types.d.js'
+import type { ModelsAttributes } from '../types/types.d.js'
 
-const { USERS } = models
+const { MODELS } = models
 
-export default function usersContollers() {
+export default function modelsControllers() {
   return {
     async get(query: FindOptions & Filterable = {}) {
-      return new Promise<InferAttributes<UsersAttributes>[]>((resolve, reject) => {
-        USERS.findAll(query)
+      return new Promise<InferAttributes<ModelsAttributes>[]>((resolve, reject) => {
+        MODELS.findAll(query)
           .then((data) => {
             return resolve(data)
           })
@@ -17,9 +17,9 @@ export default function usersContollers() {
           })
       })
     },
-    async create(payload: InferAttributes<UsersAttributes>) {
+    async create(payload: InferAttributes<ModelsAttributes>) {
       return new Promise((resolve, reject) => {
-        USERS.create(payload)
+        MODELS.create(payload)
           .then((data) => {
             return resolve(data)
           })
@@ -28,9 +28,9 @@ export default function usersContollers() {
           })
       })
     },
-    async update(payload: InferAttributes<UsersAttributes>, query: FindOptions & Filterable) {
+    async update(payload: InferAttributes<ModelsAttributes>, query: FindOptions & Filterable) {
       return new Promise((resolve, reject) => {
-        USERS.update(payload, query as never)
+        MODELS.update(payload, query as never)
           .then((resp) => {
             return resolve(resp)
           })
@@ -41,7 +41,7 @@ export default function usersContollers() {
     },
     async delete(query: FindOptions & Filterable) {
       return new Promise((resolve, reject) => {
-        USERS.destroy(query)
+        MODELS.destroy(query)
           .then((resp) => {
             return resolve(resp)
           })

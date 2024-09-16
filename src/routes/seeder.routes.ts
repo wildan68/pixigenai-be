@@ -7,7 +7,7 @@ const router = express.Router();
 router.use((req, res, next) => {
   const { key } = req.query as { key: string }
 
-  if (key !== '12356789') {
+  if (key !== '12356789' && req.path === '/sync/db') {
     return res.status(401).json({
       status: 'error',
       message: 'Unauthorized'

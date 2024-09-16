@@ -13,6 +13,7 @@ import { limiter } from './utils/helper.js';
 import AuthMiddleware from './middleware/auth.js'
 import DiscoverRoutes from './routes/discover.routes.js'
 import TestingRoutes from './routes/testing.routes.js'
+import ModelsRoutes from './routes/models.routes.js'
 import 'dotenv/config'
 
 const app: Express = express()
@@ -37,7 +38,7 @@ app.use(morgan(':ip :method :url :status :response-time ms - :res[content-length
 const excludeLimiterPath = ['/assets/webp']
 
 app.use((req, res, next) => {
-  console.log('masuk 1', req.path)
+  // console.log('masuk 1', req.path)
   if (excludeLimiterPath.find((path) => req.path.includes(path))) {
     next()
   }
@@ -59,6 +60,7 @@ app.use('/user', UserRoutes)
 app.use('/discover', DiscoverRoutes)
 app.use(CryptoRoutes)
 app.use('/testing', TestingRoutes)
+app.use('/models', ModelsRoutes)
 
 app.listen(PORT, () => {
   console.log(`app listening on port ${PORT}!`);
