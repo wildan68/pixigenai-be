@@ -1,10 +1,20 @@
 import type { Request, Response } from 'express'
 import type { GenerateModelPayload } from '../../types/types.js'
 import TripoModules from '../../modules/TripoModules.js'
+import tasksControllers from '../../controllers/tasks.controllers.js'
 
 export default async (req: Request<never, never, GenerateModelPayload>, res: Response) => {
   const { type } = req.body
   const tripoModules = new TripoModules()
+  const tasks = tasksControllers()
+
+  const saveTask = async ({ id }: { id: string}) => {
+    return await tasks.create({
+      task_id: id,
+      status: 'success',
+      user_id: req.user?.id
+    })
+  }
 
   if (!type) {
     return res.status(400).json({
@@ -28,7 +38,9 @@ export default async (req: Request<never, never, GenerateModelPayload>, res: Res
       type,
       prompt
     })
-      .then((data) => {
+      .then(async (data) => {
+        await saveTask({ id: data.task_id })
+
         res.status(200).json({
           status: 'success',
           data
@@ -55,7 +67,9 @@ export default async (req: Request<never, never, GenerateModelPayload>, res: Res
       type,
       file
     })
-      .then((data) => {
+      .then(async (data) => {
+        await saveTask({ id: data.task_id })
+
         res.status(200).json({
           status: 'success',
           data
@@ -76,7 +90,9 @@ export default async (req: Request<never, never, GenerateModelPayload>, res: Res
       files,
       mode: 'LEFT'
     })
-      .then((data) => {
+      .then(async (data) => {
+        await saveTask({ id: data.task_id })
+
         res.status(200).json({
           status: 'success',
           data

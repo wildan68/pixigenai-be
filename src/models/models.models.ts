@@ -18,9 +18,13 @@ export default function modelsModels(sequelize: Sequelize) {
       type: DataTypes.UUID,
       allowNull: true
     },
+    glb_asset_id: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
     glb_path: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: false
     },
     prompt: {
       type: DataTypes.TEXT,
@@ -30,13 +34,22 @@ export default function modelsModels(sequelize: Sequelize) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
+    thumbnail_asset_id: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
     thumbnail_url: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: false
     },
     type: {
       type: DataTypes.STRING(50),
       allowNull: false
+    },
+    is_private: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     },
     created_at: {
       type: DataTypes.DATE,

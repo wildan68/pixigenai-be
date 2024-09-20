@@ -99,16 +99,28 @@ export interface TripoHaystackResponse {
 }
 
 export interface ModelsAttributes extends Model<InferAttributes<ModelsAttributes>, InferCreationAttributes<ModelsAttributes>> {
-  id?:              CreationOptional<string>
-  user_id?:         string
-  glb_path?:        string
-  draft_model_id?:  string
-  prompt?:          string
-  task_id?:         string
-  thumbnail_url?:   string
-  type?:            string
-  created_at?:      Date
-  updated_at?:      Date
+  id?:                  CreationOptional<string>
+  user_id?:             string
+  glb_asset_id?:        string
+  glb_path?:            string
+  draft_model_id?:      string | null
+  prompt?:              string
+  task_id?:             string
+  thumbnail_asset_id?:  string
+  thumbnail_url?:       string
+  type?:                string
+  is_private?:          boolean
+  created_at?:          Date
+  updated_at?:          Date
+}
+
+export interface TasksAttributes extends Model<InferAttributes<TasksAttributes>, InferCreationAttributes<TasksAttributes>> {
+  id?:          CreationOptional<string>
+  task_id?:     string
+  user_id?:     string
+  status?:      string
+  created_at?:  Date
+  updated_at?:  Date
 }
 
 interface BaseModel {

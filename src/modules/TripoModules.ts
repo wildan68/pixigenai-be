@@ -3,12 +3,16 @@ import UtilitiesModules from './UtilitiesModules.js'
 import axios, { AxiosInstance } from 'axios'
 import { TripoHaystackResponse, GenerateModelPayload } from '../types/types.js'
 import WebSocket from 'ws'
+import modelsControllers from '../controllers/models.controllers.js'
+import CloudinaryModules from './CloudinaryModules.js'
 
 export default class TripoModules extends UtilitiesModules {
   private apiKey: string
   private jwtKey: string 
   private axios: AxiosInstance
   private BASE_URL: string
+  private MODELS_CONTROLLERS = modelsControllers()
+  private Cloudinary = new CloudinaryModules()
 
   constructor() {
     super()
@@ -20,9 +24,6 @@ export default class TripoModules extends UtilitiesModules {
 
     if (!this.apiKey) {
       throw new Error('TRIPO_API_KEY is not defined')
-    }
-    if (!this.jwtKey) {
-      throw new Error('TRIPO_JWT_KEY is not defined')
     }
 
     this.setupAxios()
@@ -76,7 +77,7 @@ export default class TripoModules extends UtilitiesModules {
 
 
   // Generate Models
-  generateModels (payload: GenerateModelPayload): Promise<{ data: { task_id: string }}> {
+  generateModels (payload: GenerateModelPayload): Promise<{ task_id: string }> {
     const { type } = payload
 
     return new Promise((resolve, reject) => {
@@ -123,7 +124,22 @@ export default class TripoModules extends UtilitiesModules {
   }
 
   // Task Watcher
-  async taskWatcher (task_id: string) {
+  async taskWatcher (task_id: string): Promise<{
+    task_id: string
+    type: string
+    status: string
+    prompt: string
+    result: {
+      model: {
+        type: string
+        url: string
+      }
+      rendered_image: {
+        type: string
+        url: string
+      }
+    }
+  }> {
     return new Promise((resolve, reject) => {
       const url = `wss://api.tripo3d.ai/v2/openapi/task/watch/${task_id}`
       const headers = {
@@ -136,14 +152,16 @@ export default class TripoModules extends UtilitiesModules {
         console.log('Task watcher connected')
       })
 
-      ws.on('message', (message) => {
+      ws.on('message', async (message) => {
         try {
           const data = JSON.parse(message.toString());
           const status = data.data.status;
           if (status !== 'running' && status !== 'queued') {
-            console.log('data task', data.data)
+            // console.log('data task', data.data)
+            const dataModel = data.data
+          
             ws.close()
-            resolve(data)
+            return resolve(dataModel)
           }
         } 
         catch (err) {

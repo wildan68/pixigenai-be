@@ -1,5 +1,5 @@
 import express from 'express'
-import { syncDBUsers, syncDBModels } from '../seeders/sync.db.js'
+import { syncDBUsers, syncDBModels, syncDBTasks } from '../seeders/sync.db.js'
 import { isAdmin } from '../utils/helper.js'
 
 const router = express.Router();
@@ -23,6 +23,7 @@ router.get('/sync/db', async (req, res) => {
 
   await syncDBUsers()
   await syncDBModels()
+  await syncDBTasks()
 
   return res.status(200).json({
     status: 'success',
