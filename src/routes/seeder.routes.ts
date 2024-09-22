@@ -31,4 +31,43 @@ router.get('/sync/db', async (req, res) => {
   })
 })
 
+router.get('/sync/db/users', async (req, res) => {
+  // check user role admins
+  // if (!isAdmin(req, res)) return
+
+  await syncDBUsers()
+
+  return res.status(200).json({
+    status: 'success',
+    message: 'DB Synced'
+  })
+})
+
+router.get('/sync/db/models', async (req, res) => {
+  // check user role admins
+  // if (!isAdmin(req, res)) return
+
+  await syncDBModels()
+
+  return res.status(200).json({
+    status: 'success',
+    message: 'DB Synced'
+  })
+})
+
+
+router.get('/sync/db/tasks', async (req, res) => {
+  // check user role admins
+  // if (!isAdmin(req, res)) return
+
+  await syncDBTasks()
+
+  return res.status(200).json({
+    status: 'success',
+    message: 'DB Synced'
+  })
+})
+
+
+
 export default router
