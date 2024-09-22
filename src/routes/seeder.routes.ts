@@ -18,7 +18,7 @@ router.use((req, res, next) => {
 })
 
 router.get('/sync/db', async (req, res) => {
-  // check user role admin
+  // check user role admins
   // if (!isAdmin(req, res)) return
 
   await syncDBUsers()
