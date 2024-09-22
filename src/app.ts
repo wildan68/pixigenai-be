@@ -2,6 +2,7 @@ import type { Express, Request } from 'express';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors'
+import type { CorsOptions } from 'cors'
 import requestIp from 'request-ip'
 import morgan from 'morgan'
 import http from 'http'
@@ -28,8 +29,20 @@ const server = http.createServer(app)
 const wss = new WebSocketServer({ noServer: true })
 const PORT = process.env.PORT || 3001
 
-// cors enable all origins
-app.use(cors())
+// CORS Configuration
+const allowedOrigins = ['http://localhost:3000', 'https://pixigen.ai', 'https://pixigenai-fe.vercel.app']
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true
+}
+app.use(cors(corsOptions))
 app.use(requestIp.mw())
 
 // Assign IP in Morgan
