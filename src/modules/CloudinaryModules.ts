@@ -6,7 +6,7 @@ import fs from 'fs'
 export default class CloudinaryModules extends UtilitiesModules {
   private apiKey: string
   private cloudinary = Cloudinary.v2
-  private multer = multer({ dest: './storage/temp' })
+  private multer = multer({ dest: '/storage/temp' })
   
   constructor() {
     super()
@@ -17,7 +17,7 @@ export default class CloudinaryModules extends UtilitiesModules {
       throw new Error('CLOUDINARY_URL is not defined')
     }
 
-    this.cloudinary.config({ secure: true })
+    this.cloudinary.config({ secure: true,  })
   }
 
   uploadImage ({ filePath, folder }: { filePath: string, folder: string }): Promise<UploadApiResponse | undefined> {
