@@ -1,12 +1,12 @@
 import UtilitiesModules from './UtilitiesModules.js'
 import Cloudinary, { UploadApiResponse } from 'cloudinary'
 import multer from 'multer'
-import fs from 'fs'
+import path from 'path'
 
 export default class CloudinaryModules extends UtilitiesModules {
   private apiKey: string
   private cloudinary = Cloudinary.v2
-  private multer = multer({ dest: '/storage/temp' })
+  private multer = multer({ dest: path.join(__dirname, '/tmp') })
   
   constructor() {
     super()
