@@ -6,7 +6,7 @@ import path from 'path'
 export default class CloudinaryModules extends UtilitiesModules {
   private apiKey: string
   private cloudinary = Cloudinary.v2
-  private multer = multer({ dest: path.join(__dirname, '/tmp') })
+  private multer = multer({ dest: '/tmp' })
   
   constructor() {
     super()
