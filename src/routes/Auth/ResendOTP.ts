@@ -37,7 +37,7 @@ export default async (req: Request, res: Response) => {
     text: `Your OTP code is: ${newOtp}`,
   }
 
-  transporter.sendMail(mailOptions, (error) => {
+  await transporter.sendMail(mailOptions, (error) => {
     if (error) {
       return res.status(500).json({
         status: 'error',
