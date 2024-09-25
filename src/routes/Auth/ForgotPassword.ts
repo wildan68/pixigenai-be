@@ -9,7 +9,7 @@ import 'dotenv/config'
 export default async (req: Request, res: Response) => {
   const { email } = req.body as { email: string }
   const { store } = RegisterStores()
-  const { transporter } = MailTransporterStores()
+  const { sendEmail } = MailTransporterStores()
 
   if (!email) {
     return res.status(400).json({
@@ -58,14 +58,15 @@ export default async (req: Request, res: Response) => {
 
   if (checkEmail.length > 0) {
     // send mail
-    await transporter.sendMail(mailOptions, (error) => {
-      if (error) {
-        return res.status(500).json({
-          status: 'error',
-          message: error
-        })
-      }
-    })
+    // await transporter.sendMail(mailOptions, (error) => {
+    //   if (error) {
+    //     return res.status(500).json({
+    //       status: 'error',
+    //       message: error
+    //     })
+    //   }
+    // })
+    await sendEmail(mailOptions)
 
     const checkStore = store.get(token)
 

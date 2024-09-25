@@ -7,7 +7,7 @@ import MailTransporterStores from '../../stores/MailTransporterStores.js'
 export default async (req: Request, res: Response) => {
   const { email, password } = req.body as { email: string, password: string }
   const { store, generateOTP } = RegisterStores()
-  const { transporter } = MailTransporterStores()
+  const { sendEmail } = MailTransporterStores()
 
   if (!email || !password) {
     return res.status(400).json({
@@ -107,15 +107,17 @@ export default async (req: Request, res: Response) => {
     subject: 'Your OTP Code',
     text: `Your OTP code is: ${otp}`,
   }
-  
-  await transporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      return res.status(500).json({
-        status: 'error',
-        message: error
-      })
-    }
-  })
+
+  await sendEmail(mailOptions)
+
+  // transporter.sendMail(mailOptions, (error) => {
+  //   if (error) {
+  //     return res.status(500).json({
+  //       status: 'error',
+  //       message: error
+  //     })
+  //   }
+  // })
 
   return res.status(200).json({
     status: 'success',

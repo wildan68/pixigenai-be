@@ -1,5 +1,6 @@
-import nodemailer from 'nodemailer'
+import nodemailer, { SentMessageInfo } from 'nodemailer'
 import 'dotenv/config'
+import { MailOptions } from 'nodemailer/lib/json-transport'
 
 export default function MailTransporterStores () {
   /**
@@ -14,7 +15,17 @@ export default function MailTransporterStores () {
     },
   })
 
+  const sendEmail = async (mailData: MailOptions) => await new Promise((resolve, reject) => {
+    transporter.sendMail(mailData).then((info: SentMessageInfo) => {
+      if (info.response.includes('250')) {
+        return resolve(true)
+      }
+      return reject(new Error('Email not sent'))
+    })
+  })
+
   return {
-    transporter
+    transporter,
+    sendEmail
   }
 }
