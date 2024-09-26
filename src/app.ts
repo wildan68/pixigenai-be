@@ -102,7 +102,7 @@ wss.on('connection', (ws, req) => {
   }
   
   const setIntervalTask = setInterval(async() => {
-    tripoModules.taskWatcher(getTaskId())
+    tripoModules.taskWatcher(getTaskId(), 'ws')
       .then((data) => ws.send(JSON.stringify(data)))
       .catch((error) => ws.send(JSON.stringify(error)))
   }, 1000)

@@ -124,7 +124,7 @@ export default class TripoModules extends UtilitiesModules {
   }
 
   // Task Watcher
-  async taskWatcher (task_id: string): Promise<{
+  async taskWatcher (task_id: string, type: 'ws' | 'polling'): Promise<{
     task_id: string
     type: string
     status: string
@@ -141,6 +141,13 @@ export default class TripoModules extends UtilitiesModules {
     }
   }> {
     return new Promise((resolve, reject) => {
+      if (type === 'polling') {
+        return this.axios.get(`/task/${task_id}`)
+          .then(({ data }) => resolve(data.data))
+          .catch((error) => reject(error))
+      }
+
+
       const url = `wss://api.tripo3d.ai/v2/openapi/task/watch/${task_id}`
       const headers = {
         Authorization: `Bearer ${this.apiKey}`

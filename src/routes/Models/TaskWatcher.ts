@@ -3,9 +3,9 @@ import TripoModules from '../../modules/TripoModules.js'
 import modelsControllers from '../../controllers/models.controllers.js'
 import CloudinaryModules from '../../modules/CloudinaryModules.js'
 
-export default async (req: Request<{ task_id: string }, never, never, { is_private: boolean }>, res: Response) => {
+export default async (req: Request<{ task_id: string,}, never, never, { is_private: boolean, type: 'ws' | 'polling' }>, res: Response) => {
   const { task_id } = req.params
-  const { is_private } = req.query
+  const { is_private, type } = req.query
   const models = modelsControllers()
   const Cloudinary = new CloudinaryModules()
 
@@ -18,7 +18,7 @@ export default async (req: Request<{ task_id: string }, never, never, { is_priva
 
   const tripoModules = new TripoModules()
 
-  return tripoModules.taskWatcher(task_id)
+  return tripoModules.taskWatcher(task_id, type)
     .then(async (data) => {
       // check if task_id exist
       const modelData = await models.get({
