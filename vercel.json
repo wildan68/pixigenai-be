@@ -1,5 +1,16 @@
 {
   "version": 2,
+  "functions": {
+    "api/**/*": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ],
   "builds": [
     {
       "src": "src/app.ts",
@@ -14,10 +25,5 @@
       "src": "/(.*)",
       "dest": "/src/app.ts"
     }
-  ],
-  "functions": {
-    "src/**/*.ts": {
-      "maxDuration": 60
-    }
-  }
+  ]
 }
