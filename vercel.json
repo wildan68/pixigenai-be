@@ -16,7 +16,7 @@
     }
   ],
   "functions": {
-    "src/**/*.ts": {
+    "src/**/*": {
       "maxDuration": 60
     }
   }
