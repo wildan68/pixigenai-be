@@ -14,5 +14,13 @@
       "src": "/(.*)",
       "dest": "/src/app.ts"
     }
-  ]
+  ],
+  "functions": {
+    "src/**/*.ts": {
+      "maxDuration": 60
+    },
+    "dist/**/*.js": {
+      "maxDuration": 60
+    }
+  }
 }
