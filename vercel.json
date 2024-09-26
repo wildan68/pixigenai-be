@@ -5,12 +5,7 @@
       "src": "src/app.ts",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["src/**/*"],
-        "functions": {
-          "src/**/*": {
-            "maxDuration": 60
-          }
-        }
+        "includeFiles": ["src/**/*"]
       }
     }
   ],
@@ -19,5 +14,10 @@
       "src": "/(.*)",
       "dest": "/src/app.ts"
     }
-  ]
+  ],
+  "functions": {
+    "src/**/*.ts": {
+      "maxDuration": 60
+    }
+  }
 }
